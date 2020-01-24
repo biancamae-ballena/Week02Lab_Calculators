@@ -29,6 +29,9 @@ public class AgeCalculatorServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        String msg = "";
+        String age = request.getParameter("age");
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
 //            out.println("<!DOCTYPE html>");
@@ -40,7 +43,20 @@ public class AgeCalculatorServlet extends HttpServlet {
 //            out.println("<h1>Servlet AgeCalculatorServlet at " + request.getContextPath() + "</h1>");
 //            out.println("</body>");
 //            out.println("</html>");
-            
+
+        if (age == null) {
+            msg = "You must give your current age.";
+        } else {
+            try {
+                int ageValue = Integer.parseInt(age);
+                msg = ("Your age next birthday is " + (ageValue + 1));
+            } catch (Exception e) {
+                msg = "You must enter your age.";
+            }
+            request.setAttribute("msg", msg);
+            getServletContext().getRequestDispatcher("/agecalculator.jsp").forward(request, response);
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,7 +96,5 @@ public class AgeCalculatorServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
-    
+    }// </editor-fold> 
 }
