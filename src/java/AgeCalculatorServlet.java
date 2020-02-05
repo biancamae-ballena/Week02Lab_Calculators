@@ -30,46 +30,38 @@ public class AgeCalculatorServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String msg = "";
+        String message = "";
         String age = request.getParameter("age");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet AgeCalculatorServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet AgeCalculatorServlet at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
 
-        if (age == null) {
-            msg = "You must give your current age.";
-        } else {
-            try {
-                int ageValue = Integer.parseInt(age);
-                msg = ("Your age next birthday is " + (ageValue + 1));
-            } catch (Exception e) {
-                msg = "You must enter your age.";
+        if (age != null) {
+            if (!age.equals("")) {
+                try {
+                    int ageValue = Integer.parseInt(age);
+                    message = ("Your age next birthday is " + (ageValue + 1) + ".<br/>");
+                    request.setAttribute("message", message);
+                } catch (NumberFormatException e) {
+                    message = "You must enter a number.<br/>";
+                    request.setAttribute("message", message);
+                }
+            } else {
+                message = "You must give your current age.<br/>";
+                request.setAttribute("message", message);
             }
-            request.setAttribute("msg", msg);
-            getServletContext().getRequestDispatcher("/agecalculator.jsp").forward(request, response);
-
         }
-    }
+        getServletContext().getRequestDispatcher("/agecalculator.jsp").forward(request, response);
+}
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+/**
+ * Handles the HTTP <code>GET</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -83,7 +75,7 @@ public class AgeCalculatorServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -94,7 +86,7 @@ public class AgeCalculatorServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+        public String getServletInfo() {
         return "Short description";
     }// </editor-fold> 
 }
