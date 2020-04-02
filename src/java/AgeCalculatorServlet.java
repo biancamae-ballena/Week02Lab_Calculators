@@ -48,7 +48,7 @@ public class AgeCalculatorServlet extends HttpServlet {
                 request.setAttribute("message", message);
             }
         }
-        getServletContext().getRequestDispatcher("/agecalculator.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/WEB-INF/agecalculator.jsp").forward(request, response);
 }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
